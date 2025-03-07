@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
             imgLives[i].SetActive(i<lives);
         }
 
-        txtScore.text = string.Format("{0,3:D3}", score);
+        txtScore.text = string.Format("{0,2:D2}", score);
     }
 
     void Awake(){
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateScore(int p){
         score += p;
-        if (score >= 50){
+        if (score >= 5){
             Destroy(gameObject);
             SceneManager.LoadScene("WinScene");
         }

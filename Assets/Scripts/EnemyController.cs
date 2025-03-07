@@ -1,3 +1,4 @@
+using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -31,11 +32,24 @@ public class EnemyController : MonoBehaviour
         }       
     }
 
+    IEnumerator DestroyAfterSound()
+{
+    AudioSource audio = gameObject.GetComponent<AudioSource>();
+    audio.Play(); // Reproduce el sonido antes de destruir
+
+    GetComponent<SpriteRenderer>().enabled = false; // Oculta el enemigo
+    GetComponent<Collider2D>().enabled = false; // Deshabilita el collider
+
+    yield return new WaitForSeconds(audio.clip.length); // Espera a que termine el sonido
+
+    Destroy(gameObject); // Ahora sí lo destruye
+}
+
     void OnTriggerEnter2D(Collider2D other){
         if (other.gameObject.tag.Equals("shoot")){
+            StartCoroutine(DestroyAfterSound());
             gm.UpdateScore(1);
             Destroy(other.gameObject);
-            Destroy(gameObject);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -10,13 +11,13 @@ public class PlayerMovement : MonoBehaviour
     // Distancia desde el centro de la nave hasta la posición donde se creará el disparo
     private float shootOffset = 1f;
     private float verticalOffset = 0.5f;
-    
+
     [SerializeField] private float fireRate = 0.5f; // Tiempo entre disparos (1 segundo)
     private float secondShotDelay = 0.1f; // Pequeño delay entre los dos disparos
     private int shotCount = 0; // Contador de disparos
-    
+
     private float nextFireTime = 0f;
-     // Variable para determinar si la nave está activa y puede disparar
+    // Variable para determinar si la nave está activa y puede disparar
     bool active = true;
 
     GameManager gm;
@@ -42,13 +43,13 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.position += transform.right * speed * Time.deltaTime;
         }
-        
+
         //movimiento hacia arriba
         if (Input.GetKey("w") && transform.position.y <= -2.69f)
         {
             transform.position += transform.up * speed * Time.deltaTime;
         }
-        
+
         //movimiento hacia abajo
         if (Input.GetKey("s") && transform.position.y >= -3.98f)
         {
@@ -60,18 +61,29 @@ public class PlayerMovement : MonoBehaviour
         {
             if (shotCount == 0)
             {
+                StartCoroutine(Sound());
                 Shoot();
                 shotCount = 1;
                 nextFireTime = Time.time + secondShotDelay; // Pequeño delay antes del segundo disparo
             }
             else if (shotCount == 1 && Time.time >= nextFireTime)
             {
+                StartCoroutine(Sound());
                 Shoot();
                 shotCount = 0; // Reinicia el contador de disparos
                 nextFireTime = Time.time + fireRate; // Aplica cooldown después del segundo disparo
             }
         }
     }
+    IEnumerator Sound()
+    {
+        AudioSource audio1 = gameObject.GetComponent<AudioSource>();
+        audio1.Play(); // Reproduce el sonido antes de destruir
+
+        yield return new WaitForSeconds(audio1.clip.length); // Espera a que termine el sonido
+        
+    }
+
 
     void Shoot()
     {
@@ -79,8 +91,10 @@ public class PlayerMovement : MonoBehaviour
         Instantiate(shootPrefab, shootPosition, Quaternion.identity);
     }
 
-    private void OnTriggerEnter2D(Collider2D other){
-        if (other.gameObject.tag.Equals("enemy")){
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag.Equals("enemy"))
+        {
             gm.UpdateLives(-1);
         }
     }
