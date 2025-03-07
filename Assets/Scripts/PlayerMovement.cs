@@ -12,7 +12,10 @@ public class PlayerMovement : MonoBehaviour
     private float verticalOffset = 0.5f;
     
     [SerializeField] private float fireRate = 0.5f; // Tiempo entre disparos (1 segundo)
-    private float nextFireTime = 0f; // Momento en que se podrá disparar de nuevo
+    private float secondShotDelay = 0.1f; // Pequeño delay entre los dos disparos
+    private int shotCount = 0; // Contador de disparos
+    
+    private float nextFireTime = 0f;
      // Variable para determinar si la nave está activa y puede disparar
     bool active = true;
 
@@ -52,18 +55,28 @@ public class PlayerMovement : MonoBehaviour
             transform.position += -transform.up * speed * Time.deltaTime;
         }
 
-        // Comprobar si la nave está activa y se ha pulsado la tecla de disparo (barra espaciadora)
+        // DISPARO DOBLE
         if (active && Input.GetKeyDown(KeyCode.RightArrow) && Time.time >= nextFireTime)
-{
-        // Calcular la posición donde se creará el disparo (un poco por delante de la nave)
-        Vector3 shootPosition = transform.position + Vector3.right * shootOffset + Vector3.up * verticalOffset;
-
-        // Crear el disparo en la posición calculada y sin rotación
-        Instantiate(shootPrefab, shootPosition, Quaternion.identity);
-
-        // Actualizar el tiempo del próximo disparo
-        nextFireTime = Time.time + fireRate;
+        {
+            if (shotCount == 0)
+            {
+                Shoot();
+                shotCount = 1;
+                nextFireTime = Time.time + secondShotDelay; // Pequeño delay antes del segundo disparo
+            }
+            else if (shotCount == 1 && Time.time >= nextFireTime)
+            {
+                Shoot();
+                shotCount = 0; // Reinicia el contador de disparos
+                nextFireTime = Time.time + fireRate; // Aplica cooldown después del segundo disparo
+            }
         }
+    }
+
+    void Shoot()
+    {
+        Vector3 shootPosition = transform.position + Vector3.right * shootOffset + Vector3.up * verticalOffset;
+        Instantiate(shootPrefab, shootPosition, Quaternion.identity);
     }
 
     private void OnTriggerEnter2D(Collider2D other){

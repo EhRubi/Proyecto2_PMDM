@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI txtScore;
     [SerializeField] GameObject[] imgLives;
 
+    [SerializeField] private GameObject townLife;
+
     int score;
     int lives = LIVES;
 
@@ -39,11 +41,22 @@ public class GameManager : MonoBehaviour
 
     public void UpdateScore(int p){
         score += p;
+        if (score >= 50){
+            Destroy(gameObject);
+            SceneManager.LoadScene("WinScene");
+        }
     }
 
     public void UpdateLives(int l){
         lives += l;
         if (lives <= 0){
+            Destroy(gameObject);
+            SceneManager.LoadScene("GameOverScene");
+        }
+    }
+
+    public void UpdateTownLife(){
+        if (townLife.transform.localScale.x <= 0f ){
             Destroy(gameObject);
             SceneManager.LoadScene("GameOverScene");
         }
