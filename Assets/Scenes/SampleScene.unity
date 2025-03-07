@@ -1003,7 +1003,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1.4
   shootPrefab: {fileID: 4838919401025572537, guid: f98047db8034ce04ea3f5c7716ce5c89, type: 3}
-  fireRate: 1
+  fireRate: 1.5
 --- !u!61 &589956785
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1213,7 +1213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad1ec13aa574c2d16b5cccfc154e7bb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interval: 3
+  interval: 0
   delay: 1.7
   enemyPrefab: {fileID: 4293136886868586943, guid: 70eac90aa7944044ea6c0fa3be79ee6a, type: 3}
 --- !u!4 &1026813481
