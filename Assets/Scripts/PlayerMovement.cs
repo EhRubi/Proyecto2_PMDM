@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -20,12 +21,15 @@ public class PlayerMovement : MonoBehaviour
     // Variable para determinar si la nave está activa y puede disparar
     bool active = true;
 
+    BossFightManager bm;
+
     GameManager gm;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         transform.position = new Vector3(-3.34f, -3.09f, 0);
+        bm = BossFightManager.GetInstance();
         gm = GameManager.GetInstance();
     }
 
@@ -39,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Movimiento derecho
-        if (Input.GetKey("d") && transform.position.x <= 0.45f)
+        if (Input.GetKey("d") && transform.position.x <= 3.82f)
         {
             transform.position += transform.right * speed * Time.deltaTime;
         }
@@ -74,6 +78,27 @@ public class PlayerMovement : MonoBehaviour
                 nextFireTime = Time.time + fireRate; // Aplica cooldown después del segundo disparo
             }
         }
+        /**
+        while (SceneManager.GetActiveScene().name == "BossScene")
+        {
+            if (active && Input.GetKeyDown(KeyCode.LeftArrow) && Time.time >= nextFireTime)
+        {
+            if (shotCount == 0)
+            {
+                StartCoroutine(Sound());
+                ShootLeft();
+                shotCount = 1;
+                nextFireTime = Time.time + secondShotDelay; // Pequeño delay antes del segundo disparo
+            }
+            else if (shotCount == 1 && Time.time >= nextFireTime)
+            {
+                StartCoroutine(Sound());
+                ShootLeft();
+                shotCount = 0; // Reinicia el contador de disparos
+                nextFireTime = Time.time + fireRate; // Aplica cooldown después del segundo disparo
+            }
+        }
+        }*/
     }
     IEnumerator Sound()
     {
@@ -91,11 +116,23 @@ public class PlayerMovement : MonoBehaviour
         Instantiate(shootPrefab, shootPosition, Quaternion.identity);
     }
 
+   /* void ShootLeft()
+    {
+        Vector3 shootPosition = -transform.position + Vector3.left * shootOffset + Vector3.up * verticalOffset;
+        Instantiate(shootPrefab, shootPosition, Quaternion.identity);
+    }*/
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag.Equals("enemy"))
         {
-            gm.UpdateLives(-1);
+            if (SceneManager.GetActiveScene().name == "BossScene")
+            {
+                bm.UpdateLives(-1);
+            }else if (SceneManager.GetActiveScene().name == "SampleScene")
+            {
+                gm.UpdateLives(-1);
+            }
         }
     }
 }

@@ -26,7 +26,7 @@ public class TownLifeController : MonoBehaviour
             life.transform.localScale = new Vector3(life.transform.localScale.x - 1f, life.transform.localScale.y, life.transform.localScale.z);
             if (life.transform.localScale.x <= 0f)
             {
-                gm.UpdateTownLife();
+                gm.GameOver();
                 Destroy(life);
             }
         }

@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WinScene.unity
     guid: 50d59845f54879798920799597cc7ee9
+  - enabled: 1
+    path: Assets/Scenes/BossScene.unity
+    guid: f03fc3708ee870145a1f7a2397095d87
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

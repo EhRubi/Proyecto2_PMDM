@@ -2,24 +2,18 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class BossFightManager : MonoBehaviour
 {
+    static BossFightManager instance;
 
-    static GameManager instance;
-    [SerializeField] int puntosDeCambio;
-
-    public static GameManager GetInstance(){
+    public static BossFightManager GetInstance(){
         return instance;
     }
 
     const int LIVES = 3;
-
-    [SerializeField] TextMeshProUGUI txtScore;
     [SerializeField] GameObject[] imgLives;
 
-    [SerializeField] private GameObject townLife;
-
-    int score;
+    [SerializeField] private GameObject bossLife;
     int lives = LIVES;
 
     private void OnGUI(){
@@ -27,8 +21,6 @@ public class GameManager : MonoBehaviour
         {
             imgLives[i].SetActive(i<lives);
         }
-
-        txtScore.text = string.Format("{0,2:D2}", score);
     }
 
     void Awake(){
@@ -40,14 +32,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void UpdateScore(int p){
-        score += p;
-        if (score >= puntosDeCambio){
-            Destroy(gameObject);
-            SceneManager.LoadScene("BossScene");
-        }
-    }
-
     public void UpdateLives(int l){
         lives += l;
         if (lives <= 0){
@@ -56,11 +40,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GameOver(){
-        if (townLife.transform.localScale.x <= 0f ){
+    public void Win(){
+        if (bossLife.transform.localScale.x <= 0f)
+        {
             Destroy(gameObject);
-            SceneManager.LoadScene("GameOverScene");
+            SceneManager.LoadScene("WinScene");
         }
+    
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
