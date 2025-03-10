@@ -10,6 +10,9 @@ public class BossController : MonoBehaviour
 
     [SerializeField] private GameObject life;
 
+
+    [SerializeField] private Animator animator;
+
     private BossFightManager bm;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -33,34 +36,35 @@ public class BossController : MonoBehaviour
         while (true)
         {
             // Esperar un tiempo aleatorio entre 4 y 7 segundos antes de moverse
-            float waitTime = Random.Range(4f, 7f);
+            float waitTime = Random.Range(2f, 7f);
             yield return new WaitForSeconds(waitTime);
 
             // Definir la dirección del movimiento
-            if (movingRight)
-            {
-                targetX = 5.74f;
-                if (gameObject.transform.position == new Vector3(targetX, -1.94f, 0)){
-                    transform.localScale = new Vector3(1, 1, 1);
-                }
-            }
-            else
-            {
-                targetX = -5.74f;
-                if (gameObject.transform.position == new Vector3(targetX, -1.94f, 0)){
-                    transform.localScale = new Vector3(-1, 1, 1);
-                }
-            }
+            targetX = movingRight ? 5.50f : -5.50f;
 
-            // Seleccionar una velocidad aleatoria entre 1 y 5
-            speed = Random.Range(5f, 10f);
+            // Seleccionar una velocidad aleatoria entre 7 y 10
+            speed = Random.Range(7f, 10f);
+            
+
+            animator.SetFloat("movement", speed);
 
             // Mover el jefe hacia el objetivo
             while (Mathf.Abs(transform.position.x - targetX) > 0.1f)
             {
-                transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetX, transform.position.y, transform.position.z), speed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(
+                    transform.position,
+                    new Vector3(targetX, transform.position.y, transform.position.z),
+                    speed * Time.deltaTime
+                );
                 yield return null;
             }
+            
+
+            // Forzar la posición exacta en el targetX para evitar errores de flotantes
+            transform.position = new Vector3(targetX, transform.position.y, transform.position.z);
+
+            // Cambiar la escala después de llegar al objetivo
+            transform.localScale = movingRight ? new Vector3(1, 1, 1) : new Vector3(-1, 1, 1);
 
             // Cambiar de dirección
             movingRight = !movingRight;

@@ -40,12 +40,14 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey("a") && transform.position.x >= -3.35f)
         {
             transform.position += -transform.right * speed * Time.deltaTime;
+            transform.localScale = new Vector3(-6.781723f, 6.49313f, 1);
         }
 
         //Movimiento derecho
         if (Input.GetKey("d") && transform.position.x <= 3.82f)
         {
             transform.position += transform.right * speed * Time.deltaTime;
+            transform.localScale = new Vector3(6.781723f, 6.49313f, 1);
         }
 
         //movimiento hacia arriba
@@ -78,8 +80,8 @@ public class PlayerMovement : MonoBehaviour
                 nextFireTime = Time.time + fireRate; // Aplica cooldown después del segundo disparo
             }
         }
-        /**
-        while (SceneManager.GetActiveScene().name == "BossScene")
+        
+        if (SceneManager.GetActiveScene().name == "BossScene")
         {
             if (active && Input.GetKeyDown(KeyCode.LeftArrow) && Time.time >= nextFireTime)
         {
@@ -98,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
                 nextFireTime = Time.time + fireRate; // Aplica cooldown después del segundo disparo
             }
         }
-        }*/
+        }
     }
     IEnumerator Sound()
     {
@@ -116,11 +118,12 @@ public class PlayerMovement : MonoBehaviour
         Instantiate(shootPrefab, shootPosition, Quaternion.identity);
     }
 
-   /* void ShootLeft()
+    void ShootLeft()
     {
-        Vector3 shootPosition = -transform.position + Vector3.left * shootOffset + Vector3.up * verticalOffset;
-        Instantiate(shootPrefab, shootPosition, Quaternion.identity);
-    }*/
+        float extraHeight = 0.5f; // Ajusta este valor para que salga más arriba
+        Vector3 shootPosition = transform.position + Vector3.left * shootOffset + Vector3.up * (verticalOffset + extraHeight);
+        GameObject projectile = Instantiate(shootPrefab, shootPosition, Quaternion.Euler(0, 0, 180)); // Rotar 180° en Z
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
