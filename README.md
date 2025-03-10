@@ -1,8 +1,8 @@
-# Nombre del Juego
+# Dimitrio's Defense
 
 ## Descripción General
 
-**Nombre del Juego** es un emocionante juego de oleadas en 2D donde los jugadores deben defender su aldea de invasores implacables. Con un estilo de juego rápido y mecánicas sencillas pero desafiantes, este juego ofrece una experiencia intensa y adictiva.
+**Dimitrio's Defense** es un emocionante juego de oleadas en 2D donde los jugadores deben defender su aldea de invasores implacables. Con un estilo de juego rápido y mecánicas sencillas pero desafiantes, este juego ofrece una experiencia intensa y adictiva.
 
 ## Objetivo del Juego
 
@@ -33,4 +33,4 @@ El objetivo principal es evitar que los enemigos lleguen al borde izquierdo de l
 
 ## Arte y Estilo Visual
 
-El juego presenta un estilo visual en 2D con gráficos detallados y animaciones fluidas. El diseño artístico se centra en crear un ambiente inmersivo y emocionante, con un enfoque en la claridad visual para que los jugadores puedan seguir la acción fácilmente.
+El juego presenta un estilo visual en 2D, estilo pixelArt y animaciones fluidas. El diseño artístico se centra en crear un ambiente inmersivo y emocionante, con un enfoque en la claridad visual para que los jugadores puedan seguir la acción fácilmente.
