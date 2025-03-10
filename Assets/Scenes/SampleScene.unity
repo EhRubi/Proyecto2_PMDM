@@ -1574,7 +1574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd0ef52222003e8f89c30cfb51547feb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puntosDeCambio: 50
+  puntosDeCambio: 25
   txtScore: {fileID: 1411753475}
   imgLives:
   - {fileID: 558054962}
