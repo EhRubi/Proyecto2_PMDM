@@ -33,4 +33,4 @@ El objetivo principal es evitar que los enemigos lleguen al borde izquierdo de l
 
 ## Arte y Estilo Visual
 
-El juego presenta un estilo visual en 2D, estilo pixelArt y animaciones fluidas. El diseño artístico se centra en crear un ambiente inmersivo y emocionante, con un enfoque en la claridad visual para que los jugadores puedan seguir la acción fácilmente.
+Antes de nada decir que los sprites de los personajes y animaciones están hechas por mi, lo único que saqué de internet fueron los fondos, fuentes de texto.... El juego presenta un estilo visual en 2D, estilo pixelArt y animaciones fluidas. El diseño artístico se centra en crear un ambiente inmersivo y emocionante, con un enfoque en la claridad visual para que los jugadores puedan seguir la acción fácilmente.
